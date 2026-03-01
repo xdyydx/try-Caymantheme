@@ -30,16 +30,26 @@
           <!-- 固定首页链接 -->
           <li><a href="/">首页</a></li>
       
-          <!-- 遍历 docs 下的 md 文件（兼容低版本 Jekyll 的写法） -->
+          <!-- 遍历所有页面，筛选 /docs/ 下的 .md 文件（兼容旧版 Liquid） -->
           {% for page in site.pages %}
-            <!-- 筛选条件：路径包含 docs/ 且以 .md 结尾 -->
-            {% if page.path contains 'showdoc/' and page.path ends with '.md' %}
-              <li>
-                <a href="{{ page.permalink | default: page.url }}">
-                  <!-- 优先显示 title，无则用文件名（去掉.md） -->
-                  {{ page.title | default: page.path | split: '/' | last | replace: '.md', '' }}
-                </a>
-              </li>
+            {% assign file_path = page.path %}
+            <!-- 1. 筛选路径包含 docs/ 的文件 -->
+            {% if file_path contains 'showdoc/' %}
+              <!-- 2. 筛选后缀为 .md 的文件（旧版 Liquid 写法） -->
+              {% assign file_ext = file_path | split: '.' | last %}
+              {% if file_ext == 'md' %}
+                <li>
+                  <a href="{{ page.permalink | default: page.url }}">
+                    <!-- 优先显示 title，无则用文件名（去掉.md） -->
+                    {% if page.title %}
+                      {{ page.title }}
+                    {% else %}
+                      {% assign file_name = file_path | split: '/' | last %}
+                      {{ file_name | replace: '.md', '' }}
+                    {% endif %}
+                  </a>
+                </li>
+              {% endif %}
             {% endif %}
           {% endfor %}
         </ul>
