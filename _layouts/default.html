@@ -33,7 +33,7 @@
           <!-- 遍历 docs 下的 md 文件（兼容低版本 Jekyll 的写法） -->
           {% for page in site.pages %}
             <!-- 筛选条件：路径包含 docs/ 且以 .md 结尾 -->
-            {% if page.path contains 'docs/' and page.path ends with '.md' %}
+            {% if page.path contains 'showdoc/' and page.path ends with '.md' %}
               <li>
                 <a href="{{ page.permalink | default: page.url }}">
                   <!-- 优先显示 title，无则用文件名（去掉.md） -->
