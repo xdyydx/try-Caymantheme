@@ -39,7 +39,7 @@
               {% assign file_ext = file_path | split: '.' | last %}
               {% if file_ext == 'md' %}
                 <li>
-                  <a href="{{ page.permalink | default: page.url }}">
+                  <a href="/try-Caymantheme{{ page.permalink | default: page.url }}">
                     <!-- 优先显示 title，无则用文件名（去掉.md） -->
                     {% if page.title %}
                       {{ page.title }}
